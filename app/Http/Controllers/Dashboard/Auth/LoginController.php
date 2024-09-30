@@ -22,4 +22,9 @@ class LoginController extends Controller
 
         return redirect()->back()->with('error', "Invalid email or password. Please try again.!");
     }
+
+    public function logoutProcess(){
+        Auth::guard('admin')->logout();
+        return redirect()->route('dashboard.login.view')->with('success', "You have successfully loggedOut!");
+    }
 }
