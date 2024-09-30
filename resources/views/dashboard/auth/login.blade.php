@@ -39,3 +39,19 @@
     </div>
 </div>
 @endsection
+
+@push('scripts')
+<script>
+document.addEventListener('DOMContentLoaded', function () {
+    const loginButton = document.querySelector('button[type="submit"]');
+    const loginForm = document.querySelector('form');
+    loginButton.addEventListener('click', function (event) {
+        event.preventDefault();
+        loginButton.disabled = true;
+        loginButton.style.backgroundColor = 'rgb(0 132 135)';
+        loginButton.style.color = '#fff';
+        loginForm.submit();
+    });
+})
+</script>
+@endpush

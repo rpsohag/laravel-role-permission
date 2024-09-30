@@ -9,8 +9,10 @@ Route::get('/', function () {
 });
 
 
-Route::get('/dashboard/login', [LoginController::class, 'loginView'])->name('dashboard.login.view');
-Route::post('/dashboard/login', [LoginController::class, 'loginProcess'])->name('dashboard.login.process');
+Route::group(['middleware' => 'AdminAuthCheck', 'as' => 'dashboard.login.'], function(){
+    Route::get('/dashboard/login', [LoginController::class, 'loginView'])->name('view');
+    Route::post('/dashboard/login', [LoginController::class, 'loginProcess'])->name('process');
+});
 
 Route::group(['middleware' => 'auth:admin'], function(){
     Route::get('dashboard', [DashboardController::class,'dashboardView'])->name('dashboard.view');

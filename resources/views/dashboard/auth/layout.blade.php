@@ -34,5 +34,7 @@
     <script src="{{ asset('dashboard-assets/js/vendor.min.js') }}"></script>
     <!-- App js -->
     <script src="{{ asset('dashboard-assets/js/app.min.js') }}"></script>
+    @stack('scripts')
+    
 </body>
 </html>
