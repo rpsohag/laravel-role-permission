@@ -9,6 +9,7 @@
         <meta content="rpsohag" name="author" />
         <!-- App favicon -->
         <link rel="shortcut icon" href="{{ asset('dashboard-assets/images/favicon.ico') }}">
+        <meta name="csrf-token" content="{{ csrf_token() }}">
         <!-- Daterangepicker css -->
         <link rel="stylesheet" href="{{ asset('dashboard-assets/vendor/daterangepicker/daterangepicker.css') }}">
         <!-- Vector Map css -->
@@ -19,6 +20,7 @@
         <link href="{{ asset('dashboard-assets/css/app.min.css') }}" rel="stylesheet" type="text/css" id="app-style" />
         <!-- Icons css -->
         <link href="{{ asset('dashboard-assets/css/icons.min.css') }}" rel="stylesheet" type="text/css" />
+        <link href="{{ asset('dashboard-assets/css/custom.css') }}" rel="stylesheet" type="text/css" />
     </head>
 
     <body>

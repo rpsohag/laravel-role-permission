@@ -2,10 +2,13 @@
 
 namespace App\Http\Controllers\Dashboard;
 
+use Illuminate\Support\Str;
+use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
-use App\Http\Requests\AdminProfileUpdateRequest;
 use Illuminate\Support\Facades\Auth;
 use App\Services\ProfileUpdateService;
+use App\Http\Requests\AdminProfileUpdateRequest;
+
 
 class AdminProfileController extends Controller
 {
@@ -25,6 +28,18 @@ class AdminProfileController extends Controller
     public function profileSettingUpdate(AdminProfileUpdateRequest $request){
         $this->profileUpdateService->updateAdminProfile($request);
         return redirect()->back()->with('success', 'Profile Successfully Updated!');
+    }
+
+    public function profileAvatarUpdate(Request $request){
+        $admin = Auth::guard('admin')->user();
+        $avatar = $request->file('avatar');
+        $filename = Str::uuid()->toString() . '.' . $avatar->getClientOriginalExtension();
+        $avatar->storeAs('images/users/', $filename, 'public');
+        $admin->update([
+            'avatar' => $filename
+        ]);
+
+        return response()->json(['success' => true, 'avatar' => $filename]);
     }
 
 }

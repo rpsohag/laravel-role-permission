@@ -1,0 +1,30 @@
+.profile-user-img{
+    position: relative;
+}
+  .adminProfileAvatarInput {
+      opacity: 0;
+      overflow: hidden;
+      position: absolute;
+      z-index: 1;
+      width: 30px;
+      height: 30px;
+      top: 58px;
+      right: -4px;
+  }
+  .profile-user-img > label {
+    position: absolute;
+    font-size: 0.5rem;
+    display: inline-block;
+    overflow: hidden;
+    width: 30px;
+    height: 30px;
+    line-height: 30px;
+    text-align: center;
+    left: 69px;
+    top: 57px;
+    background: #000000;
+    border-radius: 37px;
+  }
+  .adminProfileAvatarInput + label svg {
+      fill: #fff;
+  }
