@@ -361,3 +361,16 @@
     </div>
     <!-- end row -->
 @endsection
+
+@push('dashboard_scripts')
+    <!-- Dashboard App js -->
+    <script src="{{ asset('dashboard-assets/js/pages/dashboard.js') }}"></script>
+     <!-- Daterangepicker js -->
+     <script src="{{ asset('dashboard-assets/vendor/daterangepicker/moment.min.js') }}"></script>
+     <script src="{{ asset('dashboard-assets/vendor/daterangepicker/daterangepicker.js') }}"></script>
+     <!-- Apex Charts js -->
+     <script src="{{ asset('dashboard-assets/vendor/apexcharts/apexcharts.min.js') }}"></script>
+     <!-- Vector Map js -->
+     <script src="{{ asset('dashboard-assets/vendor/admin-resources/jquery.vectormap/jquery-jvectormap-1.2.2.min.js') }}"></script>
+     <script src="{{ asset('dashboard-assets/vendor/admin-resources/jquery.vectormap/maps/jquery-jvectormap-world-mill-en.js') }}"></script>
+@endpush

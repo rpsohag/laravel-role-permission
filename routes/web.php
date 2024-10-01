@@ -1,7 +1,9 @@
 <?php
 
+use App\Http\Controllers\Dashboard\AdminProfileController;
 use App\Http\Controllers\Dashboard\Auth\LoginController;
 use App\Http\Controllers\Dashboard\DashboardController;
+use App\Http\Controllers\Dashboard\Auth\ManagePasswordController;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
@@ -14,7 +16,13 @@ Route::group(['middleware' => 'AdminAuthCheck', 'as' => 'dashboard.login.'], fun
     Route::post('/dashboard/login', [LoginController::class, 'loginProcess'])->name('process');
 });
 
-Route::group(['middleware' => 'auth:admin'], function(){
-    Route::get('dashboard', [DashboardController::class,'dashboardView'])->name('dashboard.view');
-    Route::post('/dashboard/auth/logout', [LoginController::class, 'logoutProcess'])->name('dashboard.auth.logout');
+Route::group(['middleware' => 'auth:admin', 'as' => 'dashboard.', 'prefix' => 'dashboard'], function(){
+    Route::get('/', [DashboardController::class,'dashboardView'])->name('view');
+
+    Route::get('/profile-setting', [AdminProfileController::class,'profileSetting'])->name('profile.setting');
+    Route::post('/profile-setting', [AdminProfileController::class,'profileSettingUpdate'])->name('profile.setting.update');
+    Route::get('/change-password', [ManagePasswordController::class,'changePassword'])->name('change.password');
+    Route::patch('/change-password', [ManagePasswordController::class,'changePasswordStore'])->name('change.password.store');
+    // logout from dashboard
+    Route::post('/auth/logout', [LoginController::class, 'logoutProcess'])->name('auth.logout');
 });
