@@ -336,24 +336,19 @@
                 <a class="nav-link dropdown-toggle arrow-none nav-user" data-bs-toggle="dropdown" href="#" role="button"
                     aria-haspopup="false" aria-expanded="false">
                     <span class="account-user-avatar">
-                        <img src="{{ asset('images/users/'. $setting->avatar ) }}" alt="user-image" width="32" class="adminImageAvatar rounded-circle">
+                        <img src="{{ asset('images/users/'. authAdmin()->avatar ) }}" alt="user-image" width="32" class="adminImageAvatar rounded-circle">
                     </span>
                     <span class="d-lg-block d-none">
-                        <h5 class="my-0 fw-normal">Thomson <i
+                        <h5 class="my-0 fw-normal">{{ authAdmin()->fullname }} <i
                                 class="ri-arrow-down-s-line d-none d-sm-inline-block align-middle"></i></h5>
                     </span>
                 </a>
                 <div class="dropdown-menu dropdown-menu-end dropdown-menu-animated profile-dropdown">
                     <!-- item-->
                     <div class=" dropdown-header noti-title">
-                        <h6 class="text-overflow m-0">Welcome !</h6>
+                        <h6 class="text-overflow m-0">Welcome {{ authAdmin()->first_name }}!</h6>
                     </div>
 
-                    <!-- item-->
-                    <a href="pages-profile.html" class="dropdown-item">
-                        <i class="ri-account-circle-line fs-18 align-middle me-1"></i>
-                        <span>My Account</span>
-                    </a>
 
                     <!-- item-->
                     <a href="{{ route('dashboard.profile.setting') }}" class="dropdown-item">

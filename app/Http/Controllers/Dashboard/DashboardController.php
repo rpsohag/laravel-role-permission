@@ -9,7 +9,6 @@ use Illuminate\Support\Facades\Auth;
 class DashboardController extends Controller
 {
     public function dashboardView(){
-        $setting = Auth::guard('admin')->user();
-        return view('dashboard.dashboard',['setting' => $setting]);
+        return view('dashboard.dashboard');
     }
 }

@@ -8,7 +8,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
 use App\Services\ProfileUpdateService;
 use App\Http\Requests\AdminProfileUpdateRequest;
-
+use Illuminate\Support\Facades\Storage;
 
 class AdminProfileController extends Controller
 {
@@ -21,8 +21,7 @@ class AdminProfileController extends Controller
     }
 
     public function profileSetting(){
-        $setting = Auth::guard('admin')->user();
-        return view('dashboard.profile.setting', ['setting' => $setting]);
+        return view('dashboard.profile.setting');
     }
 
     public function profileSettingUpdate(AdminProfileUpdateRequest $request){
@@ -35,6 +34,11 @@ class AdminProfileController extends Controller
         $avatar = $request->file('avatar');
         $filename = Str::uuid()->toString() . '.' . $avatar->getClientOriginalExtension();
         $avatar->storeAs('images/users/', $filename, 'public');
+
+        if ($admin->avatar) {
+            Storage::disk('public')->delete('images/users/' . $admin->avatar);
+        }
+
         $admin->update([
             'avatar' => $filename
         ]);

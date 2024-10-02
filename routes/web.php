@@ -23,7 +23,7 @@ Route::group(['middleware' => 'auth:admin', 'as' => 'dashboard.', 'prefix' => 'd
     Route::post('/profile-setting', [AdminProfileController::class,'profileSettingUpdate'])->name('profile.setting.update');
     Route::post('/profile-avatar/update', [AdminProfileController::class,'profileAvatarUpdate'])->name('profile.avatar.update');
     Route::get('/change-password', [ManagePasswordController::class,'changePassword'])->name('change.password');
-    Route::patch('/change-password', [ManagePasswordController::class,'changePasswordStore'])->name('change.password.store');
+    Route::patch('/change-password', [ManagePasswordController::class,'adminPasswordUpdate'])->name('change.password.store');
     // logout from dashboard
     Route::post('/auth/logout', [LoginController::class, 'logoutProcess'])->name('auth.logout');
 });
