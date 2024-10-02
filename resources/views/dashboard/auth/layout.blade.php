@@ -11,7 +11,6 @@
     <link href="{{ asset('dashboard-assets/css/app.min.css') }}" rel="stylesheet" type="text/css" id="app-style" />
     <link href="{{ asset('dashboard-assets/css/icons.min.css') }}" rel="stylesheet" type="text/css" />
 </head>
-
 <body class="authentication-bg position-relative">
     <div class="account-pages pt-2 pt-sm-5 pb-4 pb-sm-5 position-relative">
         <div class="container">
@@ -33,7 +32,6 @@
     <!-- Vendor js -->
     <script src="{{ asset('dashboard-assets/js/vendor.min.js') }}"></script>
     <!-- App js -->
-    <script src="{{ asset('dashboard-assets/js/app.min.js') }}"></script>
     @stack('scripts')
     
 </body>

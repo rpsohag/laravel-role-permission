@@ -9,6 +9,7 @@
         "intervention/image": "^3.8",
         "laravel/framework": "^11.9",
         "laravel/tinker": "^2.9",
+        "laravolt/avatar": "^6.0",
         "php-flasher/flasher-laravel": "^2.0"
     },
     "require-dev": {
