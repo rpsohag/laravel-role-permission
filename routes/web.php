@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Dashboard\AdminController;
 use App\Http\Controllers\Dashboard\AdminProfileController;
 use App\Http\Controllers\Dashboard\Auth\LoginController;
 use App\Http\Controllers\Dashboard\DashboardController;
@@ -24,6 +25,8 @@ Route::group(['middleware' => 'auth:admin', 'as' => 'dashboard.', 'prefix' => 'd
     Route::post('/profile-avatar/update', [AdminProfileController::class,'profileAvatarUpdate'])->name('profile.avatar.update');
     Route::get('/change-password', [ManagePasswordController::class,'changePassword'])->name('change.password');
     Route::patch('/change-password', [ManagePasswordController::class,'adminPasswordUpdate'])->name('change.password.store');
+    // manage admin
+    Route::resource('admin', AdminController::class);
     // logout from dashboard
     Route::post('/auth/logout', [LoginController::class, 'logoutProcess'])->name('auth.logout');
 });
