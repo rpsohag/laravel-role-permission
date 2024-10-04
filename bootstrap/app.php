@@ -15,7 +15,7 @@ return Application::configure(basePath: dirname(__DIR__))
     ->withMiddleware(function (Middleware $middleware) {
         $middleware->redirectGuestsTo(fn (Request $request) => route('dashboard.login.view'));
         $middleware->alias([
-            'AdminAuthCheck' => AdminAuthCheck::class
+            'AdminAuthCheck' => AdminAuthCheck::class,
         ]);
     })
     ->withExceptions(function (Exceptions $exceptions) {

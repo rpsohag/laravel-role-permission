@@ -3,11 +3,10 @@
 namespace Database\Seeders;
 
 use App\Models\Admin;
-use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\Hash;
-use Laravolt\Avatar\Facade as Avatar;
 use Illuminate\Support\Str;
+use Laravolt\Avatar\Facade as Avatar;
 
 class AdminTableSeeder extends Seeder
 {
@@ -18,7 +17,7 @@ class AdminTableSeeder extends Seeder
     {
         $avatar = Avatar::create('John Doe');
         $filename = Str::uuid()->toString().''.'.png';
-        $avatar->save(storage_path('app/public/images/users/' . $filename), 100);
+        $avatar->save(storage_path('app/public/images/users/'.$filename), 100);
 
         Admin::create([
             'first_name' => 'John',

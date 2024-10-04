@@ -4,7 +4,7 @@ namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class AdminLoginRequest extends FormRequest
+class AdminStoreRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -22,8 +22,19 @@ class AdminLoginRequest extends FormRequest
     public function rules(): array
     {
         return [
+            'first_name' => ['required'],
+            'last_name' => ['required'],
+            'username' => ['required', 'unique:admins,username'],
             'email' => ['required'],
-            'password' => ['required'],
+            'country' => ['required'],
+            'designation' => ['required'],
+        ];
+    }
+
+    public function messages(): array
+    {
+        return [
+            'username.unique' => 'The username has already been taken. Choose another one.',
         ];
     }
 }

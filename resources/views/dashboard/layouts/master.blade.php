@@ -6,6 +6,7 @@
     <title>Dashboard | @yield('title', "Home Page")</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta content="A fully responsive admin ashboard." name="description" />
+    <meta name="csrf-token" content="{{ csrf_token() }}">
     <meta content="rpsohag" name="author" />
     <link rel="shortcut icon" href="{{ asset('dashboard-assets/images/favicon.ico') }}">
     @stack('dashboard_styles')

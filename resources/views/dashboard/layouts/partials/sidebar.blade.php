@@ -32,15 +32,20 @@
                 </a>
             </li>
             <li class="side-nav-title">Setting</li>
-            <li class="side-nav-item">
-                <a data-bs-toggle="collapse" href="#sidebarPages" aria-expanded="false" aria-controls="sidebarPages" class="side-nav-link">
+            <li class="side-nav-item {{ request()->routeIs('dashboard.admin.index') || request()->routeIs('dashboard.admin.create') || request()->routeIs('dashboard.admin.edit') ? 'menuitem-active' : '' }}">
+                <a data-bs-toggle="collapse" href="#sidebarPages" aria-expanded="false" aria-controls="sidebarPages" class="side-nav-link {{ request()->routeIs('dashboard.admin.index') || request()->routeIs('dashboard.admin.create') || request()->routeIs('dashboard.admin.edit') ? '' : 'collapsed' }}">
                     <i class="ri-admin-line"></i>
                     <span>Administration</span>
                     <span class="menu-arrow"></span>
                 </a>
-                <div class="collapse" id="sidebarPages">
+                <div class="collapse {{ 
+                request()->routeIs('dashboard.admin.index') ||
+                request()->routeIs('dashboard.admin.create') ||
+                request()->routeIs('dashboard.admin.edit') ? 'show' : '' }}" id="sidebarPages">
                     <ul class="side-nav-second-level">
-                        <li><a href="{{ route('dashboard.admin.index') }}">Admins</a></li>
+                        <li class="{{ request()->routeIs('dashboard.admin.index') || request()->routeIs('dashboard.admin.create') || request()->routeIs('dashboard.admin.edit') ? 'menuitem-active' : '' }}">
+                            <a class="{{ request()->routeIs('dashboard.admin.index') || request()->routeIs('dashboard.admin.create') || request()->routeIs('dashboard.admin.edit') ? 'active' : '' }}" href="{{ route('dashboard.admin.index') }}">Admins</a>
+                        </li>
                         <li><a href="pages-starter.html">Users</a></li>
                         <li><a href="pages-starter.html">Roles</a></li>
                         <li><a href="pages-starter.html">Permissions</a></li>

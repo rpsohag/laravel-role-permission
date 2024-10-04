@@ -3,18 +3,31 @@
 namespace App\Http\Controllers\Dashboard;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\AdminStoreRequest;
+use App\Http\Requests\AdminUpdateRequest;
 use App\Models\Admin;
+use App\Services\AdminService;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Storage;
 
 class AdminController extends Controller
 {
+    protected $adminService;
+
+    public function __construct(AdminService $adminService)
+    {
+        $this->adminService = $adminService;
+    }
+
     /**
      * Display a listing of the resource.
      */
     public function index()
     {
         $admins = Admin::all();
-        return view('dashboard.admin.index',['admins' => $admins]);
+
+        return view('dashboard.admin.index', ['admins' => $admins]);
     }
 
     /**
@@ -22,15 +35,17 @@ class AdminController extends Controller
      */
     public function create()
     {
-        //
+        return view('dashboard.admin.create');
     }
 
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request)
+    public function store(AdminStoreRequest $request)
     {
-        //
+        $this->adminService->createNewAdmin($request);
+
+        return redirect()->back()->with('success', 'Admin Created Successfully!');
     }
 
     /**
@@ -46,15 +61,19 @@ class AdminController extends Controller
      */
     public function edit(string $id)
     {
-        //
+        $admin = Admin::findOrFail($id);
+
+        return view('dashboard.admin.edit', ['admin' => $admin]);
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, string $id)
+    public function update(AdminUpdateRequest $request, string $id)
     {
-        //
+        $this->adminService->updateAdmin($request, $id);
+
+        return redirect()->back()->with('success', 'Admin updated Successfully!');
     }
 
     /**
@@ -62,6 +81,40 @@ class AdminController extends Controller
      */
     public function destroy(string $id)
     {
-        //
+        $admin = Admin::findOrFail($id);
+        if ($admin) {
+            if ($admin->avatar) {
+                Storage::disk('public')->delete('images/users/'.$admin->avatar);
+            }
+            $admin->delete();
+
+            return redirect()->back()->with('success', 'admin successfully deleted!');
+        }
+
+        return redirect()->back()->with('error', 'Something went worng!');
     }
+
+    /**
+     * View admin password change page
+     */
+
+     public function changeAdminPassword(string $id){
+        $admin = Admin::findOrFail($id);
+        return view('dashboard.admin.change-password', ['admin' => $admin]);
+     }
+
+     /**
+      * Update admin password
+      */
+      public function adminPasswordUpdate(Request $request, $id){
+        $request->validate([
+            'password' => 'required',
+            'confirm_password' => 'required|same:password'
+        ]);
+        $admin = Admin::findOrFail($id);
+        $admin->update([
+            'password' => Hash::make($request->password)
+        ]);
+        return redirect()->back()->with('success', 'Password successfully updated!');
+      }
 }

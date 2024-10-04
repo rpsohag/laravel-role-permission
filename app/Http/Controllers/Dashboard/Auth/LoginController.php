@@ -16,15 +16,17 @@ class LoginController extends Controller
     public function loginProcess(AdminLoginRequest $request)
     {
 
-        if (Auth::guard('admin')->attempt($request->validated(),$request->filled('remember'))) {
+        if (Auth::guard('admin')->attempt($request->validated(), $request->filled('remember'))) {
             return redirect()->route('dashboard.view')->with('success', 'Successfully Logged in!');
         }
 
-        return redirect()->back()->with('error', "Invalid email or password. Please try again.!");
+        return redirect()->back()->with('error', 'Invalid email or password. Please try again.!');
     }
 
-    public function logoutProcess(){
+    public function logoutProcess()
+    {
         Auth::guard('admin')->logout();
-        return redirect()->route('dashboard.login.view')->with('success', "You have successfully loggedOut!");
+
+        return redirect()->route('dashboard.login.view')->with('success', 'You have successfully loggedOut!');
     }
 }

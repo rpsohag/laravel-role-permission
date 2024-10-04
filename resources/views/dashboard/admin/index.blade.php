@@ -35,18 +35,34 @@
                         @foreach ($admins as $admin)
                         <tr class="align-middle">
                             <td>{{ $loop->index + 1 }}</td>
-                            <td><img class="w-25" src="{{ asset('images/users/'. $admin->avatar ) }}" alt="{{ $admin->name }}"></td>
-                            <td>{{ $admin->name }}</td>
+                            <td><img class="w-18" src="{{ asset('images/users/'. $admin->avatar ) }}" alt="{{ $admin->name }}"></td>
+                            <td>{{ $admin->fullname }}</td>
                             <td>{{ $admin->email }}</td>
                             <td>{{ $admin->country }}</td>
-                            <td>{{ $admin->status }}</td>
                             <td>
-                                <button class="btn btn-info btn-sm">
-                                    <a href="" class="text-white">Edit</a>
-                                </button>
-                                <button class="btn btn-danger btn-sm">
-                                    <a href="" class="text-white">Delete</a>
-                                </button>
+                                <span @class([
+                                    'badge', 
+                                    'bg-primary' => $admin->status === 'active', 
+                                    'bg-danger' => $admin->status === 'inactive'
+                                ])>
+                                    {{ ucfirst($admin->status) }}
+                                </span>
+                            </td>
+                            <td class="d-flex">
+                                <div class="dropdown">
+                                    <button class="btn btn-light dropdown-toggle" type="button" id="dropdownMenuButton" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                        Action
+                                    </button>
+                                    <div class="dropdown-menu dropdown-menu-end" aria-labelledby="dropdownMenuButton" style="">
+                                        <a class="dropdown-item" href="{{ route('dashboard.admin.edit', $admin->id) }}">Edit</a>
+                                        <a class="dropdown-item" href="{{ route('dashboard.admin.change.password', $admin->id) }}">Change Password</a>
+                                        <form method="POST" action="{{ route('dashboard.admin.destroy', $admin->id) }}">
+                                            @csrf
+                                            <input name="_method" type="hidden" value="DELETE">
+                                            <button type="submit" class="show_confirm dropdown-item" data-toggle="tooltip" title='Delete'>Delete</button>
+                                        </form>
+                                    </div>
+                                </div>
                             </td>
                         </tr>
                         @endforeach
@@ -73,6 +89,26 @@
     <script src="{{ asset('dashboard-assets/vendor/datatables.net-buttons/js/buttons.print.min.js') }}"></script>
     <script src="{{ asset('dashboard-assets/vendor/datatables.net-keytable/js/dataTables.keyTable.min.js') }}"></script>
     <script src="{{ asset('dashboard-assets/vendor/datatables.net-select/js/dataTables.select.min.js') }}"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <!-- Datatable Demo Aapp js -->
     <script src="{{ asset('dashboard-assets/js/pages/datatable.init.js') }}"></script>
+    <script>
+        $(".show_confirm").on("click", function(e){
+            e.preventDefault();
+            var form =  $(this).closest("form");
+            Swal.fire({
+            title: "Are you sure?",
+            text: "You won't be able to revert this!",
+            icon: "warning",
+            showCancelButton: true,
+            confirmButtonColor: "#3085d6",
+            cancelButtonColor: "#d33",
+            confirmButtonText: "Yes, delete it!"
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    form.submit();
+                }
+            });
+        })
+    </script>
 @endpush
