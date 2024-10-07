@@ -47,7 +47,6 @@ class RolePermissionSeeder extends Seeder
                             'role.create',
                             'role.edit',
                             'role.delete',
-                            'role.approve',
                         ]
                     ],
                     // Profile Permissions

@@ -23,14 +23,15 @@
         <!--- Sidemenu -->
         <ul class="side-nav">
 
+            @if (authAdmin()->can('dashboard.view'))
             <li class="side-nav-title">Main</li>
-
             <li class="side-nav-item">
                 <a href="{{ route('dashboard.view') }}" class="side-nav-link">
                     <i class="ri-dashboard-3-line"></i>
                     <span> Dashboard </span>
                 </a>
             </li>
+            @endif
             <li class="side-nav-title">Setting</li>
             <li class="side-nav-item {{ request()->routeIs('dashboard.admin.index') || request()->routeIs('dashboard.admin.create') || request()->routeIs('dashboard.admin.edit') ? 'menuitem-active' : '' }}">
                 <a data-bs-toggle="collapse" href="#sidebarPages" aria-expanded="false" aria-controls="sidebarPages" class="side-nav-link {{ request()->routeIs('dashboard.admin.index') || request()->routeIs('dashboard.admin.create') || request()->routeIs('dashboard.admin.edit') ? '' : 'collapsed' }}">
@@ -43,12 +44,15 @@
                 request()->routeIs('dashboard.admin.create') ||
                 request()->routeIs('dashboard.admin.edit') ? 'show' : '' }}" id="sidebarPages">
                     <ul class="side-nav-second-level">
+                        @if (authAdmin()->can('admin.view') || authAdmin()->can('admin.create') || authAdmin()->can('admin.edit') || authAdmin()->can('admin.delete'))
                         <li class="{{ request()->routeIs('dashboard.admin.index') || request()->routeIs('dashboard.admin.create') || request()->routeIs('dashboard.admin.edit') ? 'menuitem-active' : '' }}">
                             <a class="{{ request()->routeIs('dashboard.admin.index') || request()->routeIs('dashboard.admin.create') || request()->routeIs('dashboard.admin.edit') ? 'active' : '' }}" href="{{ route('dashboard.admin.index') }}">Admins</a>
                         </li>
+                        @endif
                         <li><a href="pages-starter.html">Users</a></li>
-                        <li><a href="{{ route('dashboard.roles.index') }}">Roles</a></li>
-                        <li><a href="pages-starter.html">Permissions</a></li>
+                        @if (authAdmin()->can('role.view') || authAdmin()->can('role.create') || authAdmin()->can('role.edit') || authAdmin()->can('role.delete'))
+                        <li><a href="{{ route('dashboard.roles.index') }}">Roles & Permissions</a></li>
+                        @endif
                     </ul>
                 </div>
             </li>

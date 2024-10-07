@@ -11,7 +11,7 @@
                             <!-- settings -->
                             <div id="edit-profile" class="tab-pane active show" role="tabpanel">
                                 <div class="user-profile-content">
-                                    <x-form action="{{ route('dashboard.roles.update', $role->id) }}">
+                                    <x-form action="{{ route('dashboard.roles.update', $role->id) }}" method="PUT">
                                         <x-form-input label="Role Name" name="name" value="{{ $role->name }}" placeholder="Enter a Role Name" />
                                         <div class="form-group">
                                             <label for="name">Permissions</label>

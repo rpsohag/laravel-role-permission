@@ -7,14 +7,24 @@ use App\Models\Admin;
 use Illuminate\Http\Request;
 use Spatie\Permission\Models\Permission;
 use Spatie\Permission\Models\Role;
+use Illuminate\Support\Facades\Auth;
 
 class RoleController extends Controller
 {
+    protected $admin;
+
+    public function __construct()
+    {
+        $this->admin = Auth::guard('admin')->user();
+    }
     /**
      * Display a listing of the resource.
      */
     public function index()
     {
+        if(is_null($this->admin) || !$this->admin->can('role.view')) {
+            abort(403, 'Sorry !! You are Unauthorized');
+        }
         $roles = Role::all();
         return view('dashboard.roles.index', ['roles' => $roles]);
     }
@@ -24,6 +34,9 @@ class RoleController extends Controller
      */
     public function create()
     {
+        if(is_null($this->admin) || !$this->admin->can('role.create')) {
+            abort(403, 'Sorry !! You are Unauthorized');
+        }
         $permissions = Permission::all();
         $permission_groups = Admin::getPermissionGroups();
         return view('dashboard.roles.create', ['permissions' => $permissions, 'permission_groups' => $permission_groups]);
@@ -34,12 +47,14 @@ class RoleController extends Controller
      */
     public function store(Request $request)
     {
-        // return $request->all();
+        if(is_null($this->admin) || !$this->admin->can('role.create')) {
+            abort(403, 'Sorry !! You are Unauthorized');
+        }
         $request->validate([
             'name' => 'required|unique:roles',
         ]);
 
-        $role = Role::create(['name' => $request->name]);
+        $role = Role::create(['name' => $request->name, 'guard_name' => 'admin']);
         $permissions = $request->input('permissions');
         if(!empty($permissions)){
             $role->syncPermissions($permissions);
@@ -60,7 +75,10 @@ class RoleController extends Controller
      */
     public function edit(string $id)
     {
-        $role = Role::findById($id);
+        if(is_null($this->admin) || !$this->admin->can('role.edit')) {
+            abort(403, 'Sorry !! You are Unauthorized');
+        }
+        $role = Role::findById($id, 'admin');
         $all_permissions = Permission::all();
         $permission_groups = Admin::getpermissionGroups();
         return view('dashboard.roles.edit', compact('role', 'all_permissions', 'permission_groups'));
@@ -71,10 +89,13 @@ class RoleController extends Controller
      */
     public function update(Request $request, string $id)
     {
+        if(is_null($this->admin) || !$this->admin->can('role.edit')) {
+            abort(403, 'Sorry !! You are Unauthorized');
+        }
         $request->validate([
             'name' => 'required',
         ]);
-        $role = Role::findById($id);
+        $role = Role::findById($id, 'admin');
         $permissions = $request->input('permissions');
         if(!empty($permissions)){
             $role->name = $request->name;
@@ -89,7 +110,10 @@ class RoleController extends Controller
      */
     public function destroy(string $id)
     {
-        $role = Role::findById($id);
+        if(is_null($this->admin) || !$this->admin->can('role.delete')) {
+            abort(403, 'Sorry !! You are Unauthorized');
+        }
+        $role = Role::findById($id, 'admin');
         $role->delete();
         return redirect()->back()->with('success', 'Role deleted successfully');
     }

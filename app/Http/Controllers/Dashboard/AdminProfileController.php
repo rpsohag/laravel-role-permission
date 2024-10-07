@@ -13,19 +13,27 @@ use Illuminate\Support\Str;
 class AdminProfileController extends Controller
 {
     private $profileUpdateService;
+    protected $admin;
 
     public function __construct(ProfileUpdateService $profileUpdateService)
     {
         $this->profileUpdateService = $profileUpdateService;
+        $this->admin = Auth::guard('admin')->user();
     }
 
     public function profileSetting()
     {
+        if(is_null($this->admin) || !$this->admin->can('profile.edit')) {
+            abort(403, 'Sorry !! You are Unauthorized');
+        }
         return view('dashboard.profile.setting');
     }
 
     public function profileSettingUpdate(AdminProfileUpdateRequest $request)
     {
+        if(is_null($this->admin) || !$this->admin->can('profile.edit')) {
+            abort(403, 'Sorry !! You are Unauthorized');
+        }
         $this->profileUpdateService->updateAdminProfile($request);
 
         return redirect()->back()->with('success', 'Profile Successfully Updated!');
