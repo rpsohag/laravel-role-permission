@@ -47,7 +47,7 @@
                             <a class="{{ request()->routeIs('dashboard.admin.index') || request()->routeIs('dashboard.admin.create') || request()->routeIs('dashboard.admin.edit') ? 'active' : '' }}" href="{{ route('dashboard.admin.index') }}">Admins</a>
                         </li>
                         <li><a href="pages-starter.html">Users</a></li>
-                        <li><a href="pages-starter.html">Roles</a></li>
+                        <li><a href="{{ route('dashboard.roles.index') }}">Roles</a></li>
                         <li><a href="pages-starter.html">Permissions</a></li>
                     </ul>
                 </div>
