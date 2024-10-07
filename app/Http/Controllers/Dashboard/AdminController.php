@@ -10,6 +10,7 @@ use App\Services\AdminService;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Storage;
+use Spatie\Permission\Models\Role;
 
 class AdminController extends Controller
 {
@@ -35,7 +36,8 @@ class AdminController extends Controller
      */
     public function create()
     {
-        return view('dashboard.admin.create');
+        $roles = Role::all();
+        return view('dashboard.admin.create', ['roles' => $roles]);
     }
 
     /**
@@ -44,7 +46,6 @@ class AdminController extends Controller
     public function store(AdminStoreRequest $request)
     {
         $this->adminService->createNewAdmin($request);
-
         return redirect()->back()->with('success', 'Admin Created Successfully!');
     }
 
@@ -62,8 +63,8 @@ class AdminController extends Controller
     public function edit(string $id)
     {
         $admin = Admin::findOrFail($id);
-
-        return view('dashboard.admin.edit', ['admin' => $admin]);
+        $roles = Role::all();
+        return view('dashboard.admin.edit', ['admin' => $admin, 'roles' => $roles]);
     }
 
     /**

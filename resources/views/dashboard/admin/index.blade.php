@@ -27,6 +27,7 @@
                             <th>Name</th>
                             <th>Email</th>
                             <th>Country</th>
+                            <th>Roles</th>
                             <th>Active Status</th>
                             <th>Action</th>
                         </tr>
@@ -39,6 +40,13 @@
                             <td>{{ $admin->fullname }}</td>
                             <td>{{ $admin->email }}</td>
                             <td>{{ $admin->country }}</td>
+                            <td>
+                                @foreach ($admin->roles as $role)
+                                    <span class="badge bg-success mr-1">
+                                        {{ $role->name }}
+                                    </span>
+                                @endforeach
+                            </td>
                             <td>
                                 <span @class([
                                     'badge', 

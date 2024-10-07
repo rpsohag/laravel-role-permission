@@ -1,4 +1,8 @@
 @extends('dashboard.layouts.master')
+@section('title') Create Admin @endsection
+@push('dashboard_styles')
+<link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
+@endpush
 @section('dashboard_content')
 <x-breadcrumb title="Create Admin" />
     <!-- end row -->
@@ -29,6 +33,14 @@
                                             <x-form-input label="Password" name="password" value="{{ old('password') }}" placeholder="Enter password" />
                                             <x-form-input label="Confirm password" name="password" value="{{ old('confirm_password') }}" placeholder="Enter confirm password" />
                                             <div class="col-sm-12 mb-3">
+                                                <label class="form-label" for="roles">Assign Roles</label>
+                                                <select name="roles[]" id="roles" class="form-control select2" multiple>
+                                                    @foreach ($roles as $role)
+                                                        <option value="{{ $role->name }}">{{ $role->name }}</option>
+                                                    @endforeach
+                                                </select>
+                                            </div>
+                                            <div class="col-sm-12 mb-3">
                                                 <label class="form-label" for="bio">Bio</label>
                                                 <textarea style="height: 125px;" name="bio" id="bio" class="form-control">{{ old('bio') }}</textarea>
                                             </div>
@@ -58,5 +70,10 @@
     <!-- end page title -->
 @endsection
 @push('dashboard_scripts')
-
+<script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
+<script>
+    $(document).ready(function() {
+        $('.select2').select2();
+    });
+</script>
 @endpush

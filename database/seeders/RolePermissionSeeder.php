@@ -2,6 +2,7 @@
 
 namespace Database\Seeders;
 
+use App\Models\Admin;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 use Spatie\Permission\Models\Role;
@@ -69,5 +70,9 @@ class RolePermissionSeeder extends Seeder
                         $permission->assignRole($roleSuperAdmin);
                     }
                 }
+
+        // assign roles to default admin
+        $admin = Admin::where('email', 'admin@example.com')->first();
+        $admin->assignRole($roleSuperAdmin);
     }
 }

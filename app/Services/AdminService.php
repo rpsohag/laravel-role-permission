@@ -24,7 +24,7 @@ class AdminService
             $avatar->save(storage_path('app/public/images/users/'.$filename), 100);
         }
 
-        Admin::create([
+      $admin =  Admin::create([
             'first_name' => $request->first_name,
             'last_name' => $request->last_name,
             'username' => $request->username,
@@ -37,6 +37,10 @@ class AdminService
             'bio' => $request->bio,
             'status' => $request->status,
         ]);
+
+        if($request->roles){
+            $admin->assignRole($request->roles);
+        }
 
         return true;
     }
@@ -64,6 +68,10 @@ class AdminService
             'bio' => $request->bio,
             'status' => $request->status,
         ]);
+        $admin->roles()->detach();
+        if($request->roles){
+            $admin->assignRole($request->roles);
+        }
 
         return true;
     }
