@@ -23,7 +23,7 @@ class AdminProfileController extends Controller
 
     public function profileSetting()
     {
-        if(is_null($this->admin) || !$this->admin->can('profile.edit')) {
+        if (is_null($this->admin) || !$this->admin->can('profile.edit')) {
             abort(403, 'Sorry !! You are Unauthorized');
         }
         return view('dashboard.profile.setting');
@@ -31,7 +31,7 @@ class AdminProfileController extends Controller
 
     public function profileSettingUpdate(AdminProfileUpdateRequest $request)
     {
-        if(is_null($this->admin) || !$this->admin->can('profile.edit')) {
+        if (is_null($this->admin) || !$this->admin->can('profile.edit')) {
             abort(403, 'Sorry !! You are Unauthorized');
         }
         $this->profileUpdateService->updateAdminProfile($request);

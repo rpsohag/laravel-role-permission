@@ -33,7 +33,12 @@
             </li>
             @endif
             <li class="side-nav-title">Setting</li>
-            <li class="side-nav-item {{ request()->routeIs('dashboard.admin.index') || request()->routeIs('dashboard.admin.create') || request()->routeIs('dashboard.admin.edit') ? 'menuitem-active' : '' }}">
+            <li class="side-nav-item {{ request()->routeIs('dashboard.admin.index') ||
+             request()->routeIs('dashboard.admin.create') ||
+             request()->routeIs('dashboard.admin.edit') ||
+             request()->routeIs('dashboard.roles.index') ||
+             request()->routeIs('dashboard.roles.create') ||
+             request()->routeIs('dashboard.roles.edit') ? 'menuitem-active' : '' }}">
                 <a data-bs-toggle="collapse" href="#sidebarPages" aria-expanded="false" aria-controls="sidebarPages" class="side-nav-link {{ request()->routeIs('dashboard.admin.index') || request()->routeIs('dashboard.admin.create') || request()->routeIs('dashboard.admin.edit') ? '' : 'collapsed' }}">
                     <i class="ri-admin-line"></i>
                     <span>Administration</span>
@@ -42,7 +47,10 @@
                 <div class="collapse {{ 
                 request()->routeIs('dashboard.admin.index') ||
                 request()->routeIs('dashboard.admin.create') ||
-                request()->routeIs('dashboard.admin.edit') ? 'show' : '' }}" id="sidebarPages">
+                request()->routeIs('dashboard.admin.edit') ||
+                 request()->routeIs('dashboard.roles.index') ||
+             request()->routeIs('dashboard.roles.create') ||
+             request()->routeIs('dashboard.roles.edit')  ? 'show' : '' }}" id="sidebarPages">
                     <ul class="side-nav-second-level">
                         @if (authAdmin()->can('admin.view') || authAdmin()->can('admin.create') || authAdmin()->can('admin.edit') || authAdmin()->can('admin.delete'))
                         <li class="{{ request()->routeIs('dashboard.admin.index') || request()->routeIs('dashboard.admin.create') || request()->routeIs('dashboard.admin.edit') ? 'menuitem-active' : '' }}">
@@ -51,7 +59,9 @@
                         @endif
                         <li><a href="pages-starter.html">Users</a></li>
                         @if (authAdmin()->can('role.view') || authAdmin()->can('role.create') || authAdmin()->can('role.edit') || authAdmin()->can('role.delete'))
-                        <li><a href="{{ route('dashboard.roles.index') }}">Roles & Permissions</a></li>
+                        <li class="{{ request()->routeIs('dashboard.roles.index') || request()->routeIs('dashboard.roles.create') || request()->routeIs('dashboard.roles.edit') ? 'menuitem-active' : '' }}">
+                            <a href="{{ route('dashboard.roles.index') }}" class="{{ request()->routeIs('dashboard.roles.index') ||  request()->routeIs('dashboard.roles.create') || request()->routeIs('dashboard.roles.edit') ? 'active' : '' }}">Roles & Permissions</a>
+                        </li>
                         @endif
                     </ul>
                 </div>

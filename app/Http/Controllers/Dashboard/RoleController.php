@@ -22,7 +22,7 @@ class RoleController extends Controller
      */
     public function index()
     {
-        if(is_null($this->admin) || !$this->admin->can('role.view')) {
+        if (is_null($this->admin) || !$this->admin->can('role.view')) {
             abort(403, 'Sorry !! You are Unauthorized');
         }
         $roles = Role::all();
@@ -34,7 +34,7 @@ class RoleController extends Controller
      */
     public function create()
     {
-        if(is_null($this->admin) || !$this->admin->can('role.create')) {
+        if (is_null($this->admin) || !$this->admin->can('role.create')) {
             abort(403, 'Sorry !! You are Unauthorized');
         }
         $permissions = Permission::all();
@@ -47,7 +47,7 @@ class RoleController extends Controller
      */
     public function store(Request $request)
     {
-        if(is_null($this->admin) || !$this->admin->can('role.create')) {
+        if (is_null($this->admin) || !$this->admin->can('role.create')) {
             abort(403, 'Sorry !! You are Unauthorized');
         }
         $request->validate([
@@ -56,7 +56,7 @@ class RoleController extends Controller
 
         $role = Role::create(['name' => $request->name, 'guard_name' => 'admin']);
         $permissions = $request->input('permissions');
-        if(!empty($permissions)){
+        if (!empty($permissions)) {
             $role->syncPermissions($permissions);
         }
         return redirect()->back()->with('success', 'Role created successfully');
@@ -75,7 +75,7 @@ class RoleController extends Controller
      */
     public function edit(string $id)
     {
-        if(is_null($this->admin) || !$this->admin->can('role.edit')) {
+        if (is_null($this->admin) || !$this->admin->can('role.edit')) {
             abort(403, 'Sorry !! You are Unauthorized');
         }
         $role = Role::findById($id, 'admin');
@@ -89,7 +89,7 @@ class RoleController extends Controller
      */
     public function update(Request $request, string $id)
     {
-        if(is_null($this->admin) || !$this->admin->can('role.edit')) {
+        if (is_null($this->admin) || !$this->admin->can('role.edit')) {
             abort(403, 'Sorry !! You are Unauthorized');
         }
         $request->validate([
@@ -97,7 +97,7 @@ class RoleController extends Controller
         ]);
         $role = Role::findById($id, 'admin');
         $permissions = $request->input('permissions');
-        if(!empty($permissions)){
+        if (!empty($permissions)) {
             $role->name = $request->name;
             $role->save();
             $role->syncPermissions($permissions);
@@ -110,7 +110,7 @@ class RoleController extends Controller
      */
     public function destroy(string $id)
     {
-        if(is_null($this->admin) || !$this->admin->can('role.delete')) {
+        if (is_null($this->admin) || !$this->admin->can('role.delete')) {
             abort(403, 'Sorry !! You are Unauthorized');
         }
         $role = Role::findById($id, 'admin');

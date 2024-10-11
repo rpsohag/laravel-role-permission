@@ -15,7 +15,7 @@ class DashboardController extends Controller
     }
     public function dashboardView()
     {
-        if(is_null($this->admin) || !$this->admin->can('dashboard.view')) {
+        if (is_null($this->admin) || !$this->admin->can('dashboard.view')) {
             abort(403, 'Sorry !! You are Unauthorized');
         }
         return view('dashboard.dashboard');

@@ -29,7 +29,7 @@ class AdminController extends Controller
      */
     public function index()
     {
-        if(is_null($this->admin) || !$this->admin->can('admin.view')) {
+        if (is_null($this->admin) || !$this->admin->can('admin.view')) {
             abort(403, 'Sorry !! You are Unauthorized');
         }
         $admins = Admin::all();
@@ -42,7 +42,7 @@ class AdminController extends Controller
      */
     public function create()
     {
-        if(is_null($this->admin) || !$this->admin->can('admin.create')) {
+        if (is_null($this->admin) || !$this->admin->can('admin.create')) {
             abort(403, 'Sorry !! You are Unauthorized');
         }
         $roles = Role::all();
@@ -54,7 +54,7 @@ class AdminController extends Controller
      */
     public function store(AdminStoreRequest $request)
     {
-        if(is_null($this->admin) || !$this->admin->can('admin.create')) {
+        if (is_null($this->admin) || !$this->admin->can('admin.create')) {
             abort(403, 'Sorry !! You are Unauthorized');
         }
         $this->adminService->createNewAdmin($request);
@@ -74,7 +74,7 @@ class AdminController extends Controller
      */
     public function edit(string $id)
     {
-        if(is_null($this->admin) || !$this->admin->can('admin.edit')) {
+        if (is_null($this->admin) || !$this->admin->can('admin.edit')) {
             abort(403, 'Sorry !! You are Unauthorized');
         }
         $admin = Admin::findOrFail($id);
@@ -87,7 +87,7 @@ class AdminController extends Controller
      */
     public function update(AdminUpdateRequest $request, string $id)
     {
-        if(is_null($this->admin) || !$this->admin->can('admin.edit')) {
+        if (is_null($this->admin) || !$this->admin->can('admin.edit')) {
             abort(403, 'Sorry !! You are Unauthorized');
         }
         $this->adminService->updateAdmin($request, $id);
@@ -100,7 +100,7 @@ class AdminController extends Controller
      */
     public function destroy(string $id)
     {
-        if(is_null($this->admin) || !$this->admin->can('admin.delete')) {
+        if (is_null($this->admin) || !$this->admin->can('admin.delete')) {
             abort(403, 'Sorry !! You are Unauthorized');
         }
         $admin = Admin::findOrFail($id);
@@ -120,19 +120,21 @@ class AdminController extends Controller
      * View admin password change page
      */
 
-     public function changeAdminPassword(string $id){
-        if(is_null($this->admin) || !$this->admin->can('admin.edit')) {
+    public function changeAdminPassword(string $id)
+    {
+        if (is_null($this->admin) || !$this->admin->can('admin.edit')) {
             abort(403, 'Sorry !! You are Unauthorized');
         }
         $admin = Admin::findOrFail($id);
         return view('dashboard.admin.change-password', ['admin' => $admin]);
-     }
+    }
 
-     /**
-      * Update admin password
-      */
-      public function adminPasswordUpdate(Request $request, $id){
-        if(is_null($this->admin) || !$this->admin->can('admin.edit')) {
+    /**
+     * Update admin password
+     */
+    public function adminPasswordUpdate(Request $request, $id)
+    {
+        if (is_null($this->admin) || !$this->admin->can('admin.edit')) {
             abort(403, 'Sorry !! You are Unauthorized');
         }
         $request->validate([
@@ -144,5 +146,5 @@ class AdminController extends Controller
             'password' => Hash::make($request->password)
         ]);
         return redirect()->back()->with('success', 'Password successfully updated!');
-      }
+    }
 }

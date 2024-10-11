@@ -24,6 +24,7 @@
                         <tr>
                             <th>SL/NO</th>
                             <th>Name</th>
+                            <th>Permissions</th>
                             <th>Action</th>
                         </tr>
                     </thead>
@@ -32,6 +33,13 @@
                         <tr class="align-middle">
                             <td>{{ $loop->index + 1 }}</td>
                             <td>{{ $role->name }}</td>
+                            <td>
+                                @foreach ($role->permissions as $permission)
+                                    <span class="badge bg-info mr-1">
+                                        {{ $permission->name }}
+                                    </span>
+                                @endforeach
+                            </td>
                             <td class="d-flex">
                                 <div class="dropdown">
                                     <button class="btn btn-light dropdown-toggle" type="button" id="dropdownMenuButton" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
